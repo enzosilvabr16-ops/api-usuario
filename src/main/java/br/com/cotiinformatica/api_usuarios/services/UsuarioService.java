@@ -1,6 +1,7 @@
 package br.com.cotiinformatica.api_usuarios.services;
 
 import br.com.cotiinformatica.api_usuarios.components.CryptoComponent;
+import br.com.cotiinformatica.api_usuarios.components.JwtTokenComponent;
 import br.com.cotiinformatica.api_usuarios.dtos.AutenticarRequestDto;
 import br.com.cotiinformatica.api_usuarios.dtos.AutenticarResponseDto;
 import br.com.cotiinformatica.api_usuarios.dtos.UsuarioRequestDto;
@@ -10,6 +11,7 @@ import br.com.cotiinformatica.api_usuarios.enums.Perfil;
 import br.com.cotiinformatica.api_usuarios.exceptions.AcessoNegadoException;
 import br.com.cotiinformatica.api_usuarios.exceptions.EmailJaCadastradoException;
 import br.com.cotiinformatica.api_usuarios.repositories.UsuarioRepository;
+import org.antlr.v4.runtime.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.AccessException;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,9 @@ public class UsuarioService {
 
     @Autowired
     private CryptoComponent cryptoComponent;
+
+    @Autowired
+    private JwtTokenComponent jwtTokenComponent;
 
     public UsuarioResponseDto criarUsuario(UsuarioRequestDto request) {
 
@@ -66,13 +71,16 @@ public class UsuarioService {
         if(usuario == null) {
             throw new AcessoNegadoException();
         }
+
+        var token = jwtTokenComponent.getToken(usuario.getId(), usuario.getEmail(), usuario.getPerfil().toString());
+
         return new AutenticarResponseDto(
           usuario.getId(),
           usuario.getNome(),
           usuario.getEmail(),
           usuario.getPerfil().toString(),
           LocalDateTime.now(),
-          "<<TOKEN JWT>>"
+          token
         );
     }
 
