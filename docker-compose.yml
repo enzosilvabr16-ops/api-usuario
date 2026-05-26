@@ -1,0 +1,70 @@
+services:
+
+  # Serviço do banco de dados PostgreSQL
+  postgres:
+    image: postgres:16
+    container_name: postgres_apiusuarios
+    restart: always
+    environment:
+      POSTGRES_USER: apiusuarios
+      POSTGRES_PASSWORD: coti2026
+      POSTGRES_DB: bdapiusuarios
+    ports:
+      - "5435:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - rede_api
+
+  # Interface web para gerenciamento do PostgreSQL
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin_apiusuarios
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+    ports:
+      - "5051:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - rede_api
+
+  # Serviço da aplicação Spring Boot (api-usuarios)
+  api-usuarios:
+    # Faz o build da imagem Docker usando o Dockerfile presente na raiz do projeto
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api_usuarios_app
+    restart: always
+
+    # Define dependência para garantir que o banco suba antes da aplicação
+    depends_on:
+      - postgres
+
+    # Mapeia a porta 8082 do container para a porta 8082 da máquina host
+    ports:
+      - "8082:8082"
+
+    # Variáveis de ambiente para conexão com o banco (ajuste conforme seu application.properties)
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/bdapiusuarios
+      SPRING_DATASOURCE_USERNAME: apiusuarios
+      SPRING_DATASOURCE_PASSWORD: coti2026
+      SERVER_PORT: 8082
+
+    # Conecta o container na mesma rede dos outros serviços
+    networks:
+      - rede_api
+
+# Volumes persistentes
+volumes:
+  postgres_data:
+  pgadmin_data:
+
+# Rede compartilhada entre os containers
+networks:
+  rede_api:
+    driver: bridge
