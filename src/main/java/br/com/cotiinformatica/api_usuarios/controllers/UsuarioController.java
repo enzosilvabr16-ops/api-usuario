@@ -1,29 +1,29 @@
 package br.com.cotiinformatica.api_usuarios.controllers;
 
-<<<<<<< HEAD
+
 import br.com.cotiinformatica.api_usuarios.components.JwtTokenComponent;
 import br.com.cotiinformatica.api_usuarios.dtos.AutenticarRequestDto;
 import br.com.cotiinformatica.api_usuarios.dtos.DadosUsuarioResponseDto;
-=======
+
 import br.com.cotiinformatica.api_usuarios.dtos.AutenticarRequestDto;
->>>>>>> 825fc313da19b89b673530b404eaaa5100de2667
+
 import br.com.cotiinformatica.api_usuarios.dtos.UsuarioRequestDto;
 import br.com.cotiinformatica.api_usuarios.exceptions.AcessoNegadoException;
 import br.com.cotiinformatica.api_usuarios.exceptions.EmailJaCadastradoException;
 import br.com.cotiinformatica.api_usuarios.services.UsuarioService;
-<<<<<<< HEAD
+
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-=======
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
->>>>>>> 825fc313da19b89b673530b404eaaa5100de2667
+
 
 @RestController
 @RequestMapping("/api/usuario")
@@ -32,12 +32,11 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
-<<<<<<< HEAD
+
     @Autowired
     private JwtTokenComponent jwtTokenComponent;
 
-=======
->>>>>>> 825fc313da19b89b673530b404eaaa5100de2667
+
     @PostMapping("criar")
     public ResponseEntity<?> postCriarUsuario(@RequestBody UsuarioRequestDto request) {
 
@@ -70,7 +69,7 @@ public class UsuarioController {
         }
     }
 
-<<<<<<< HEAD
+
     @GetMapping("obter-dados")
     public ResponseEntity<?> getObterDadosUsuario(HttpServletRequest http) {
 
@@ -84,6 +83,5 @@ public class UsuarioController {
         return ResponseEntity.status(200).build();
     }
 
-=======
->>>>>>> 825fc313da19b89b673530b404eaaa5100de2667
+
 }
