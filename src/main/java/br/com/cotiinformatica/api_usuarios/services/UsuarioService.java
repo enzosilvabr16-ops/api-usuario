@@ -2,17 +2,33 @@ package br.com.cotiinformatica.api_usuarios.services;
 
 import br.com.cotiinformatica.api_usuarios.components.CryptoComponent;
 import br.com.cotiinformatica.api_usuarios.components.JwtTokenComponent;
+<<<<<<< HEAD
 import br.com.cotiinformatica.api_usuarios.dtos.*;
+=======
+import br.com.cotiinformatica.api_usuarios.dtos.AutenticarRequestDto;
+import br.com.cotiinformatica.api_usuarios.dtos.AutenticarResponseDto;
+import br.com.cotiinformatica.api_usuarios.dtos.UsuarioRequestDto;
+import br.com.cotiinformatica.api_usuarios.dtos.UsuarioResponseDto;
+>>>>>>> 825fc313da19b89b673530b404eaaa5100de2667
 import br.com.cotiinformatica.api_usuarios.entities.Usuario;
 import br.com.cotiinformatica.api_usuarios.enums.Perfil;
 import br.com.cotiinformatica.api_usuarios.exceptions.AcessoNegadoException;
 import br.com.cotiinformatica.api_usuarios.exceptions.EmailJaCadastradoException;
 import br.com.cotiinformatica.api_usuarios.repositories.UsuarioRepository;
+<<<<<<< HEAD
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
+=======
+import org.antlr.v4.runtime.Token;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.AccessException;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+>>>>>>> 825fc313da19b89b673530b404eaaa5100de2667
 
 @Service
 public class UsuarioService {
@@ -80,6 +96,7 @@ public class UsuarioService {
         );
     }
 
+<<<<<<< HEAD
     public DadosUsuarioResponseDto ObterDadosUsuario(UUID id) {
 
         //consultar o usuarui no bd atraves do id
@@ -94,6 +111,8 @@ public class UsuarioService {
         );
     }
 
+=======
+>>>>>>> 825fc313da19b89b673530b404eaaa5100de2667
 
 
 }

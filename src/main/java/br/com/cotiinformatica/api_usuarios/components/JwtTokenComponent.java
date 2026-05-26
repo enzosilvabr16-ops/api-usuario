@@ -1,9 +1,14 @@
 package br.com.cotiinformatica.api_usuarios.components;
 
+<<<<<<< HEAD
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.servlet.http.HttpServletRequest;
+=======
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+>>>>>>> 825fc313da19b89b673530b404eaaa5100de2667
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -42,6 +47,7 @@ public class JwtTokenComponent {
                 .signWith(SignatureAlgorithm.HS256, secret) // chave de assinatura
                 .compact(); // finaliza e retorna o token gerado
     }
+<<<<<<< HEAD
 
     /*
         Método para extrair o ID do usuário contido no TOKEN
@@ -72,3 +78,6 @@ public class JwtTokenComponent {
         }
     }
 }
+=======
+}
+>>>>>>> 825fc313da19b89b673530b404eaaa5100de2667
