@@ -38,10 +38,10 @@ public class UsuarioController {
 
 
     @PostMapping("criar")
-    public ResponseEntity<?> postCriarUsuario(@RequestBody UsuarioRequestDto request) {
+    public ResponseEntity<?> postCriarUsuario(@RequestBody UsuarioRequestDto request, HttpServletRequest http) {
 
         try {
-            var response = usuarioService.criarUsuario(request);
+            var response = usuarioService.criarUsuario(request, http);
             return ResponseEntity.status(201).body(response);
         }
 

@@ -16,6 +16,7 @@ import br.com.cotiinformatica.api_usuarios.exceptions.AcessoNegadoException;
 import br.com.cotiinformatica.api_usuarios.exceptions.EmailJaCadastradoException;
 import br.com.cotiinformatica.api_usuarios.repositories.UsuarioRepository;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,10 +43,24 @@ public class UsuarioService {
     @Autowired
     private JwtTokenComponent jwtTokenComponent;
 
-    public UsuarioResponseDto criarUsuario(UsuarioRequestDto request) {
+    public UsuarioResponseDto criarUsuario(UsuarioRequestDto request, HttpServletRequest http) {
+
+        //extrair o id do usuario no token
+        var id = jwtTokenComponent.getUserId(http);
+
+        //Obter os dados do usuario autenticado
+        var dadoUsuario = this.ObterDadosUsuario(id);
+
+        if (!dadoUsuario.perfil().equals(Perfil.ADMINISTRADOR)) {
+            throw new IllegalArgumentException("O perfil do usuário deve ser 'ADMINISTRADOR'.");
+        }
 
         if(usuarioRepository.existsByEmail(request.email())) {
             throw new EmailJaCadastradoException();
+        }
+
+        if(request.perfil() == null) {
+            throw new IllegalArgumentException("O perfil do usuário é obrigatório.");
         }
 
         //criando um obj da classe entity
@@ -54,7 +69,7 @@ public class UsuarioService {
         usuario.setNome(request.nome());
         usuario.setEmail(request.email());
         usuario.setSenha(cryptoComponent.getSha256(request.senha()));
-        usuario.setPerfil(Perfil.OPERADOR);
+        usuario.setPerfil(Perfil.valueOf(request.perfil()));
 
         //salvar no bd
         usuarioRepository.save(usuario);
@@ -107,7 +122,7 @@ public class UsuarioService {
                 usuario.getId(),
                 usuario.getNome(),
                 usuario.getEmail(),
-                usuario.getPerfil().toString()
+                usuario.getPerfil()
         );
     }
 
